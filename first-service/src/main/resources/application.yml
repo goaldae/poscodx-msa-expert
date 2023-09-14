@@ -1,0 +1,15 @@
+
+server:
+  port: 8081
+
+spring:
+  application:
+    name: my-first-service
+  cloud:
+    compatibility-verifier:
+      enabled: false
+
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false

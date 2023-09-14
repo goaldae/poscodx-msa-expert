@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/discoveryservice/discoveryservice.iml" filepath="$PROJECT_DIR$/discoveryservice/discoveryservice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/first-service/first-service.iml" filepath="$PROJECT_DIR$/first-service/first-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/second-service/first-service (1).iml" filepath="$PROJECT_DIR$/second-service/first-service (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/msa-poscodx.iml" filepath="$PROJECT_DIR$/.idea/msa-poscodx.iml" />
+      <module fileurl="file://$PROJECT_DIR$/user-service/user-service.iml" filepath="$PROJECT_DIR$/user-service/user-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zuul-service/zuul-service.iml" filepath="$PROJECT_DIR$/zuul-service/zuul-service.iml" />
+    </modules>
+  </component>
+</project>

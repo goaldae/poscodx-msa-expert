@@ -1,0 +1,18 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: my-zuul-service
+  cloud:
+    compatibility-verifier:
+      enabled: false
+
+zuul:
+  routes:
+    first-service:
+      path: /first-service/**
+      url: http://localhost:8081
+    second-service:
+      path: /second-service/**
+      url: http://localhost:8082
