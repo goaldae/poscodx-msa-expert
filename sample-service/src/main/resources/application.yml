@@ -6,17 +6,9 @@ server:
 spring:
   application:
     name: user-service
-  h2:
-    console:
-      enabled: true
-      settings:
-        web-allow-others: true
-      path: /h2-console
-
   cloud:
     compatibility-verifier:
       enabled: false
-
 
 eureka:
   client:
@@ -28,5 +20,4 @@ eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
-greeting:
-  message: Welcome to the Simple E-commerce.
+  

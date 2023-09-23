@@ -35,3 +35,4 @@ POSCODX에서 수행하는 ’23년 핵심기술전문가 수행 과제
 | Catalog Service | /catalog-service/catalogs: 상품 목록 제공                                                                                      | GET                  |
 | User Service    | /user-service/users: 사용자 정보 등록 <br/> /user-service/users: 전체 사용자 조회 <br/> /user-service/users{user_id}: 사용자 정보, 주문 내역 조회 | POST<br/>GET<br/>GET |
 | Order Service   | /order-service/users/{user_id}/orders: 주문 등록 <br/> /order-service/users/{user_id}/orders: 주문 확인                          | POST<br/>GET         |
+
