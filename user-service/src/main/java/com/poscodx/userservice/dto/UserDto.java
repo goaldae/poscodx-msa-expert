@@ -1,9 +1,11 @@
 package com.poscodx.userservice.dto;
 
 
+import com.poscodx.userservice.vo.ResponseOrder;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class UserDto {
@@ -16,4 +18,6 @@ public class UserDto {
     private Date createdAt;
 
     private String encryptedPwd; //암호화 비밀번호
+
+    private List<ResponseOrder> orders;
 }
