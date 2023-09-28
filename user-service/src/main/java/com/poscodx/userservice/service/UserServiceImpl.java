@@ -9,6 +9,8 @@ import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
 
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,18 @@ public class UserServiceImpl implements UserService{
     UserRepository userRepository;
     BCryptPasswordEncoder passwordEncoder;
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+       UserEntity userEntity = userRepository.findByEmail(username);
+
+       if(userEntity == null){ //유저가 존재하지 않는다면?
+           throw new UsernameNotFoundException(username);
+       }
+
+       return new User(userEntity.getEmail(), userEntity.getEncryptedPwd(),
+               true, true, true, true,
+               new ArrayList<>());
+    }
 
     @Autowired //생성자로 의존성 주입
     public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder){
