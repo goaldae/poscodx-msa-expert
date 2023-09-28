@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user-service/")
+@RequestMapping("/") //API Gateway에서 설정해줘서 prefix 지움
 public class UserController {
     //yml 파일에 있는 환경 변수를 사용할 때
     //필드에 직접 주입하는 것보다 생성자를 통해 주입하는 것이 좋음

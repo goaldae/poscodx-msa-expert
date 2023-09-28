@@ -2,6 +2,7 @@ package com.poscodx.userservice.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.poscodx.userservice.vo.RequestLogin;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
+@Slf4j
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     //인증 시도 필터 메소드
