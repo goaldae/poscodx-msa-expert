@@ -1,7 +1,9 @@
 package com.poscodx.userservice.security;
 
 import com.poscodx.userservice.service.UserService;
+
 import org.springframework.context.annotation.Configuration;
+
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -51,8 +53,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     private AuthenticationFilter getAuthenticaionFilter() throws Exception {
         //우리가 만든 AuthenticationFilter를 필터로 사용할 것이고
         //이는 filter를 상속받고 있어서 상관없음
-        AuthenticationFilter authenticationFilter = new AuthenticationFilter();
-        authenticationFilter.setAuthenticationManager(authenticationManager());
+        AuthenticationFilter authenticationFilter =
+                new AuthenticationFilter(authenticationManager(), userService, env);
+        //authenticationFilter.setAuthenticationManager(authenticationManager());
 
         return authenticationFilter;
     }
