@@ -31,6 +31,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         //http.authorizeRequests().antMatchers("/users/**").permitAll(); //해당 url은 모든 권한이 다 접근할 수 있다
+
+        http.authorizeRequests().antMatchers("/actuator/**").permitAll();
+
         http.authorizeRequests().antMatchers("/**") //모든 요청에 대해서 그냥 통과시키지 않을 것임
                 .hasIpAddress("172.30.1.50") //<-IP 변경해야함, 사용자는 ip를 제한적으로 받을 것임
                 .and()
