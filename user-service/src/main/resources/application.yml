@@ -44,7 +44,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh, health, beans, httptrace
+        include: refresh, health, beans, busrefresh
 
 #sprint cloud config service에서 가져옴
 #token:
