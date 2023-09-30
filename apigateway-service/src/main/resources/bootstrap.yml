@@ -1,7 +1,9 @@
 spring:
   cloud:
     config:
-      name: ecommerce
+      name: config-service
+#  profiles:
+#    active: prod
   config:
     import: optional:configserver:http://localhost:8888
     #spring cloud 2.4.x 이후 버전부터 config server 등록하는 법

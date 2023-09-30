@@ -10,8 +10,14 @@ eureka:
 spring:
   application:
     name: apigateway-service
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
 
-# java? ??? ??? ?? ???? ?? ???? ?????  ??
+
+  # java? ??? ??? ?? ???? ?? ???? ?????  ??
 # - ???? ? ???..
   cloud:
     gateway:
@@ -47,12 +53,23 @@ spring:
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
+            - Path=/user-service/actuator/** #path는 조건
+            - Method=GET, POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
             - Path=/user-service/** #path는 조건
             - Method=GET
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter #해당 요청이 들어왔을 때 인증 필터를 거친다 -> jwt, 그리고 위 로그인과 회원가입은 이 과정이 필요 없기 때문에
+
+
 
 
         - id: order-service
@@ -91,7 +108,12 @@ spring:
                 baseMessage: Hi,there.
                 preLogger: true
                 postLogger: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans, httptrace, busrefresh
 
 
-token:
-  secret: user_token
+#token:
+#  secret: user_token

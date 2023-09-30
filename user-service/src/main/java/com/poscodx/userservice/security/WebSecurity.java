@@ -35,7 +35,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/actuator/**").permitAll();
 
         http.authorizeRequests().antMatchers("/**") //모든 요청에 대해서 그냥 통과시키지 않을 것임
-                .hasIpAddress("172.30.1.50") //<-IP 변경해야함, 사용자는 ip를 제한적으로 받을 것임
+                .hasIpAddress("172.30.1.94") //<-IP 변경해야함, 사용자는 ip를 제한적으로 받을 것임
                 .and()
                 .addFilter(getAuthenticaionFilter()); //그리고 이 필터를 통과시킨 데이터(로그인 정보)에 한해서만 권한을 부여할 것임
 
