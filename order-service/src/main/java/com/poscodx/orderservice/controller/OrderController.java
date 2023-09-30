@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/order-service/") //API gateway가 사용하는 prefix
+@RequestMapping("/order-service") //API gateway가 사용하는 prefix
 public class OrderController {
     Environment env; //.yml 환경변수 값을 가져온다
     OrderService orderService;
