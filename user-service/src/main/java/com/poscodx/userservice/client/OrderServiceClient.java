@@ -9,7 +9,7 @@ import java.util.List;
 
 @FeignClient(name = "order-service")
 public interface OrderServiceClient {
-    @GetMapping("/order-service/{userId}/orders_ng")//order service의 이 엔드포인트를 반환받아오고 싶은 것임
+    @GetMapping("/order-service/{userId}/orders")//order service의 이 엔드포인트를 반환받아오고 싶은 것임
     List<ResponseOrder> getOrders(@PathVariable String userId);
 
 }

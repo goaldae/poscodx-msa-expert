@@ -36,8 +36,9 @@ public class UserServiceImpl implements UserService{
     BCryptPasswordEncoder passwordEncoder;
     Environment env;
     RestTemplate restTemplate; //다음 단계로 feign client를 사용하기 때문에 이제 사용하지 않음
-
     OrderServiceClient orderServiceClient;
+
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -108,15 +109,16 @@ public class UserServiceImpl implements UserService{
 
         /*3. Feign client 활용 방법*/
         /*Feign exception handling*/
-        List<ResponseOrder> ordersList = null;
-        try{
-            //위처럼 로직이 들어가는 부분을 추상화한 feign에게 위임함 -> 한줄로 깔끔하게 처리
-            ordersList = orderServiceClient.getOrders(userId);
-        }catch(FeignException ex) {
-            log.error(ex.getMessage());
-        }
+//        List<ResponseOrder> ordersList = null;
+//        try{
+//            //위처럼 로직이 들어가는 부분을 추상화한 feign에게 위임함 -> 한줄로 깔끔하게 처리
+//            ordersList = orderServiceClient.getOrders(userId);
+//        }catch(FeignException ex) {
+//            log.error(ex.getMessage());
+//        }
 
-
+        /*4. Error decoder 방식 -> 에러 핸들링도 위임함*/
+        List<ResponseOrder> ordersList = orderServiceClient.getOrders(userId);
 
         userDto.setOrders(ordersList);
 
