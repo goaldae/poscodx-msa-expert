@@ -62,6 +62,13 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!--		mariadb-->
+		<dependency>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+			<version>2.7.2</version>
+		</dependency>
+
 		<!--		request vo-> dto -> entity 로 변환해주는 매퍼-->
 		<dependency>
 			<groupId>org.modelmapper</groupId>
@@ -73,7 +80,10 @@
 		<!--			<groupId>org.springframework.boot</groupId>-->
 		<!--			<artifactId>spring-boot-starter-security</artifactId>-->
 		<!--		</dependency>-->
-
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
 
 	</dependencies>
 	<dependencyManagement>
