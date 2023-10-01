@@ -2,6 +2,7 @@ package com.poscodx.orderservice.controller;
 
 import com.poscodx.orderservice.dto.OrderDto;
 import com.poscodx.orderservice.jpa.OrderEntity;
+import com.poscodx.orderservice.messagequeue.KafkaProducer;
 import com.poscodx.orderservice.service.OrderService;
 import com.poscodx.orderservice.vo.RequestOrder;
 import com.poscodx.orderservice.vo.ResponseOrder;
@@ -20,10 +21,12 @@ import java.util.List;
 public class OrderController {
     Environment env; //.yml 환경변수 값을 가져온다
     OrderService orderService;
+    KafkaProducer kafkaProducer;
 
-    public OrderController(Environment env, OrderService orderService) {
+    public OrderController(Environment env, OrderService orderService, KafkaProducer kafkaProducer) {
         this.env = env;
         this.orderService = orderService;
+        this.kafkaProducer = kafkaProducer;
     }
 
 
@@ -39,11 +42,18 @@ public class OrderController {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
+
+        /*JPA*/
         OrderDto orderDto = mapper.map(orderDetails, OrderDto.class);
         orderDto.setUserId(userId);
         OrderDto createdOrder = orderService.createOrder(orderDto);
 
         ResponseOrder responseOrder = mapper.map(createdOrder, ResponseOrder.class);
+
+        //위 과정이 끝나면 카프카 토픽에 전달하는 과정을 하면 됨
+        /*send this order to the kafka*/
+        kafkaProducer.send("example-catalog-topic", orderDto);
+
 
         //return "Create user method is called";
         return ResponseEntity.status(HttpStatus.CREATED).body(responseOrder);//201번 성공 메세지를 반환함
