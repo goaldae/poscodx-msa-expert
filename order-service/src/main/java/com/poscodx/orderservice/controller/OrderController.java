@@ -3,9 +3,11 @@ package com.poscodx.orderservice.controller;
 import com.poscodx.orderservice.dto.OrderDto;
 import com.poscodx.orderservice.jpa.OrderEntity;
 import com.poscodx.orderservice.messagequeue.KafkaProducer;
+import com.poscodx.orderservice.messagequeue.OrderProducer;
 import com.poscodx.orderservice.service.OrderService;
 import com.poscodx.orderservice.vo.RequestOrder;
 import com.poscodx.orderservice.vo.ResponseOrder;
+import org.hibernate.criterion.Order;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.core.env.Environment;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/order-service") //API gateway가 사용하는 prefix
@@ -22,11 +25,14 @@ public class OrderController {
     Environment env; //.yml 환경변수 값을 가져온다
     OrderService orderService;
     KafkaProducer kafkaProducer;
+    OrderProducer orderProducer;
 
-    public OrderController(Environment env, OrderService orderService, KafkaProducer kafkaProducer) {
+    public OrderController(Environment env, OrderService orderService
+            , KafkaProducer kafkaProducer, OrderProducer orderProducer) {
         this.env = env;
         this.orderService = orderService;
         this.kafkaProducer = kafkaProducer;
+        this.orderProducer = orderProducer;
     }
 
 
@@ -46,14 +52,19 @@ public class OrderController {
         /*JPA*/
         OrderDto orderDto = mapper.map(orderDetails, OrderDto.class);
         orderDto.setUserId(userId);
-        OrderDto createdOrder = orderService.createOrder(orderDto);
+//        OrderDto createdOrder = orderService.createOrder(orderDto);
+//        ResponseOrder responseOrder = mapper.map(createdOrder, ResponseOrder.class);
 
-        ResponseOrder responseOrder = mapper.map(createdOrder, ResponseOrder.class);
+        /*Kafka*/
+        orderDto.setOrderId(UUID.randomUUID().toString()); //order 시리얼 번호를 랜덤 id값으로 부여함
+        orderDto.setTotalPrice(orderDto.getQty() * orderDetails.getUnitPrice());
 
         //위 과정이 끝나면 카프카 토픽에 전달하는 과정을 하면 됨
         /*send this order to the kafka*/
         kafkaProducer.send("example-catalog-topic", orderDto);
+        orderProducer.send("orders", orderDto);
 
+        ResponseOrder responseOrder = mapper.map(orderDto, ResponseOrder.class);
 
         //return "Create user method is called";
         return ResponseEntity.status(HttpStatus.CREATED).body(responseOrder);//201번 성공 메세지를 반환함

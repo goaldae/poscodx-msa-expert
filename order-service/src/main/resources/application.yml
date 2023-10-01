@@ -12,10 +12,18 @@ spring:
       settings:
         web-allow-others: true
       path: /h2-console
-  #테이블이 자동 생성되기 위해 아래와 같이 입력
+
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb
+    #테이블이 자동 생성되기 위해 아래와 같이 입력
+#    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:mem:testdb
+
+    #kafka를 활용한 단일 db를 위해 mariaDB로 교체
+    url: jdbc:mariadb://localhost:3306/mydb
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: root
+    password: test1357
+
   cloud:
     compatibility-verifier:
       enabled: false
